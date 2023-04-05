@@ -1,9 +1,15 @@
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import generics
 
-def getRoutes(request):
+from .models import TodoItem
+from .serializers import TodoSerializer
 
-    routes = [
-        {'GET': '/api/todos'}
-    ]
+class TodoList(generics.ListCreateAPIView):
+    queryset = TodoItem.objects.all()
+    serializer_class = TodoSerializer
 
-    return JsonResponse(routes, safe=False)
+class TodoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TodoItem.objects.all()
+    serializer_class = TodoSerializer
