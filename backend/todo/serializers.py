@@ -8,6 +8,12 @@ class TodoSerializer(ModelSerializer):
         fields = ('id', 'name', 'order', 'is_done')
 
 
+class TodoItemCreateSerializer(ModelSerializer):
+    class Meta:
+        model = TodoItem
+        fields = ('name',)
+
+
 class TodoItemUpdateSerializer(ModelSerializer):
     is_done = BooleanField(required=True)
     class Meta:

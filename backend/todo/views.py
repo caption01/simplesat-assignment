@@ -4,13 +4,34 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import TodoItem
-from .serializers import TodoSerializer, TodoItemUpdateSerializer, TodoItemReOrderUpdateSerializer
+from .serializers import TodoSerializer, TodoItemCreateSerializer, TodoItemUpdateSerializer, TodoItemReOrderUpdateSerializer
 from .helper import TodoClass
 
 
 class TodoItemList(ListCreateAPIView):
     queryset = TodoItem.objects.all().order_by('order')
     serializer_class = TodoSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return TodoItemCreateSerializer
+        else:
+            return self.serializer_class
+        
+    def post(self, request, *args, **kwargs):
+        name = request.data.get('name')
+        total_items = self.queryset.count()
+
+        new_todo_item = {
+            'name': name,
+            'order': total_items + 1,
+        }
+
+        serializer = self.serializer_class(data=new_todo_item)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
 
 class TodoItemUpdateApi(APIView, TodoClass):
