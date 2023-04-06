@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from .models import TodoItem
 from .serializers import TodoSerializer, TodoItemUpdateSerializer, TodoItemReOrderUpdateSerializer
+from .helper import TodoClass
 
 
 class TodoItemList(ListCreateAPIView):
@@ -12,7 +13,7 @@ class TodoItemList(ListCreateAPIView):
     serializer_class = TodoSerializer
 
 
-class TodoItemUpdateApi(APIView):
+class TodoItemUpdateApi(APIView, TodoClass):
     serializer_class = TodoItemUpdateSerializer
     
     def put(self, request, pk):
@@ -28,14 +29,13 @@ class TodoItemUpdateApi(APIView):
         TodoItem.objects.get(id=pk).delete()
 
         # TODO: implement logic to re-order when remove
+        super().re_order(_from=1, _to=3)
 
-        response = {
-            'message': True
-        }
+        response = { 'message': True }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
 
-class TodoItemReOrderApi(APIView):
+class TodoItemReOrderApi(APIView, TodoClass):
     serializer_class = TodoItemReOrderUpdateSerializer
     
     def post(self, request, pk):
@@ -44,6 +44,7 @@ class TodoItemReOrderApi(APIView):
         to_order = data.get('to_order')
 
         # TODO: implement logic to re-order when change order
+        super().re_order(_from=1, _to=3)
 
         res = { 'message': f're order for id: {pk} from {from_order} to {to_order}' }
 
