@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, Serializer, IntegerField, ModelSerializer
+from rest_framework.serializers import ModelSerializer, Serializer, IntegerField, ModelSerializer, BooleanField
 
 from .models import TodoItem
 
@@ -9,9 +9,10 @@ class TodoSerializer(ModelSerializer):
 
 
 class TodoItemUpdateSerializer(ModelSerializer):
+    is_done = BooleanField(required=True)
     class Meta:
         model = TodoItem
-        fields = ['id', 'name', 'order', 'is_done']
+        fields = '__all__'
 
 
 class TodoItemReOrderUpdateSerializer(Serializer):
