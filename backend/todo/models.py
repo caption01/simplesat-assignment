@@ -7,3 +7,11 @@ class TodoItem(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def shift_up(self):
+        return self.order - 1
+
+    @property
+    def shift_down(self):
+        return self.order + 1

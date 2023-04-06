@@ -47,12 +47,13 @@ class TodoItemUpdateApi(APIView, TodoClass):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
     
     def delete(self, request, pk):
-        TodoItem.objects.get(id=pk).delete()
+        item = TodoItem.objects.get(id=pk)
+        deleted_order = item.order
+        item.delete()
 
-        # TODO: implement logic to re-order when remove
-        super().re_order(_from=1, _to=3)
+        items = super().re_order(_from=deleted_order, _to=None)
+        response = { 'message': True, 'data': items }
 
-        response = { 'message': True }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
 
@@ -64,9 +65,7 @@ class TodoItemReOrderApi(APIView, TodoClass):
         from_order = data.get('from_order')
         to_order = data.get('to_order')
 
-        # TODO: implement logic to re-order when change order
-        super().re_order(_from=1, _to=3)
+        items = super().re_order(_from=from_order, _to=to_order)
+        response = { 'message': True, 'data': items }
 
-        res = { 'message': f're order for id: {pk} from {from_order} to {to_order}' }
-
-        return Response(res)
+        return Response(response, status=status.HTTP_202_ACCEPTED)
