@@ -31,7 +31,8 @@ class TodoItemList(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+        response = { 'success': True, 'data': serializer.validated_data }
+        return Response(response, status=status.HTTP_201_CREATED)
 
 
 class TodoItemUpdateApi(APIView, TodoClass):
@@ -44,7 +45,8 @@ class TodoItemUpdateApi(APIView, TodoClass):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        response = { 'success': True, 'data': serializer.validated_data }
+        return Response(response, status=status.HTTP_200_OK)
     
     def delete(self, request, pk):
         item = TodoItem.objects.get(id=pk)
@@ -52,7 +54,7 @@ class TodoItemUpdateApi(APIView, TodoClass):
         item.delete()
 
         items = super().re_order(_from=deleted_order, _to=None)
-        response = { 'message': True, 'data': items }
+        response = { 'success': True, 'data': items }
 
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
@@ -66,6 +68,6 @@ class TodoItemReOrderApi(APIView, TodoClass):
         to_order = data.get('to_order')
 
         items = super().re_order(_from=from_order, _to=to_order)
-        response = { 'message': True, 'data': items }
+        response = { 'success': True, 'data': items }
 
         return Response(response, status=status.HTTP_202_ACCEPTED)
