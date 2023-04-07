@@ -5,6 +5,7 @@ const StyledDiv = tw.div`
   ${(p) => p.$size}
   ${(p) => p.$bold && 'font-bold'}
   ${(p) => p.$italic && 'italic'}
+  ${(p) => p.$lineThrough && 'line-through'}
 `;
 
 const Text = ({
@@ -12,6 +13,7 @@ const Text = ({
   size = 'text-[2rem]',
   bold = false,
   italic = false,
+  lineThrough = false,
   ...props
 }) => {
   return (
@@ -20,6 +22,7 @@ const Text = ({
       $size={size}
       $bold={bold}
       $italic={italic}
+      $lineThrough={lineThrough}
       {...props}
     />
   );

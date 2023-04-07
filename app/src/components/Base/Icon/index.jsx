@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { Eraser, Cross } from './asset';
+import { Eraser, Cross, Check, Uncheck } from './asset';
 
 const asset = {
   eraser: Eraser,
   cross: Cross,
+  check: Check,
+  uncheck: Uncheck,
 };
 
 const Icon = ({ name, size, ...props }) => {
