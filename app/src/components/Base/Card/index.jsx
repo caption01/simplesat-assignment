@@ -8,7 +8,7 @@ const Container = tw.div`
   items-center
   bg-white
   pt-[2rem]
-  px-[2rem]
+  px-[3rem]
   rounded-[2rem]
   min-w-[40rem]
 `;
@@ -18,7 +18,7 @@ const HeaderContainer = tw.div`
   justify-between
   items-center
   w-full
-  py-[2rem]
+  pb-[3rem]
 `;
 
 const BodyContainer = tw.div`
@@ -38,7 +38,7 @@ const FooterContainer = tw.div`
   bottom-0
   left-0
   bg-gray-100
-  p-[2rem]
+  p-[3rem]
   rounded-b-[2rem]
 `;
 
