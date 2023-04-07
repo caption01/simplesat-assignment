@@ -1,8 +1,11 @@
+const getSize = (size) => `${size}rem`;
+
 export const Eraser = ({ size = 24, color = '#FF7575' }) => {
+  let remSize = getSize(size);
   return (
     <svg
-      width={size}
-      height={size}
+      width={remSize}
+      height={remSize}
       viewBox="0 0 19 17"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -15,10 +18,11 @@ export const Eraser = ({ size = 24, color = '#FF7575' }) => {
 };
 
 export const Cross = ({ size = 24, color = 'black' }) => {
+  let remSize = getSize(size);
   return (
     <svg
-      width={size}
-      height={size}
+      width={remSize}
+      height={remSize}
       viewBox="0 0 11 12"
       xmlns="http://www.w3.org/2000/svg"
     >

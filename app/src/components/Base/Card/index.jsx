@@ -10,7 +10,7 @@ const Container = tw.div`
   pt-[2rem]
   px-[2rem]
   rounded-[2rem]
-  w-[30rem]
+  min-w-[40rem]
 `;
 
 const HeaderContainer = tw.div`
