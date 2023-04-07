@@ -1,6 +1,6 @@
 import tw from 'tailwind-styled-components';
 
-import { Icon } from './components';
+import { Icon, Card } from './components';
 
 const Layout = tw.div`
     w-full
@@ -9,6 +9,8 @@ const Layout = tw.div`
     flex
     justify-center
     items-center
+
+    bg-stone-300
 `;
 
 const Hello = tw.div`
@@ -18,11 +20,28 @@ const Hello = tw.div`
 `;
 
 function App() {
+  const header = () => {
+    return (
+      <>
+        <Hello $bold>Hello world!</Hello>
+        <Icon name="eraser" size={24} />
+      </>
+    );
+  };
+
+  const footer = () => {
+    return (
+      <>
+        <div>what we have to do ?</div>
+        <Icon name="cross" size={24} />
+      </>
+    );
+  };
   return (
     <Layout>
-      <Hello $bold>Hello world!</Hello>
-      <Icon name="eraser" size={24} />
-      <Icon name="cross" size={24} />
+      <Card header={() => header()} footer={() => footer()}>
+        i am body
+      </Card>
     </Layout>
   );
 }
