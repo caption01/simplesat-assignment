@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import tw from 'tailwind-styled-components';
+
+import { Icon } from './components';
+
+const Hello = tw.div`
+  text-blue-600
+  text-5xl
+  ${(p) => p.$bold && 'font-bold'}
+`;
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline-offset-1 text-orange-800">
-      Hello world!
-    </h1>
+    <div>
+      <Hello $bold>Hello world!</Hello>
+      <Icon name="eraser" size={24} />
+      <Icon name="cross" size={24} />
+    </div>
   );
 }
 
