@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react';
 
 import { Card, Icon, Text } from '../Base';
@@ -69,7 +70,7 @@ const TodoCard = () => {
   return (
     <Card header={() => <TodoHeader />} footer={() => <TodoFooter />}>
       <TodoItem done />
-      <TodoItem />
+      <TodoItem done />
       <TodoItem />
       <TodoItem />
     </Card>

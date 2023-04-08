@@ -1,3 +1,4 @@
+import React from 'react'
 const getSize = (size) => `${size}rem`;
 
 export const Eraser = ({ size = 24, color = '#FF7575', ...props }) => {
@@ -76,7 +77,7 @@ export const Uncheck = ({ size = 24, color = '#BCBCBC', ...props }) => {
         rx="1"
         fill="#FFFEFE"
         stroke={color}
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );
