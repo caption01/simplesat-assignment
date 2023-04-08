@@ -31,31 +31,32 @@ const transform = (item = {}) => {
   };
 };
 
+const getTodoList = (axiosResponse) => {
+  const responseData = axiosResponse.data;
+
+  return responseData ? responseData.data.map(transform) : [];
+};
+
 export const useTodo = create((set) => ({
   todos: [],
   get: async () => {
-    const todos = await getTodo();
-    const todoList = todos.data.map(transform);
-    set({ todos: todoList });
+    const response = await getTodo();
+    set({ todos: getTodoList(response) });
   },
-  add: async (item) => {
-    const todos = await createTodo(item);
-    const todoList = todos.data.map(transform);
-    set({ todos: todoList });
+  add: async (newTask = '') => {
+    const response = await createTodo({ name: newTask });
+    set({ todos: getTodoList(response) });
   },
   edit: async (id, item) => {
-    const todos = await updateTodo(id, item);
-    const todoList = todos.data.map(transform);
-    set({ todos: todoList });
+    const response = await updateTodo(id, item);
+    set({ todos: getTodoList(response) });
   },
   order: async (id, { from, to }) => {
-    const todos = await orderTodo(id, { from, to });
-    const todoList = todos.data.map(transform);
-    set({ todos: todoList });
+    const response = await orderTodo(id, { from, to });
+    set({ todos: getTodoList(response) });
   },
-  remove: async (id, item) => {
-    const todos = await deleteTodo(id);
-    const todoList = todos.data.map(transform);
-    set({ todos: todoList });
+  remove: async (id) => {
+    const response = await deleteTodo(id);
+    set({ todos: getTodoList(response) });
   },
 }));

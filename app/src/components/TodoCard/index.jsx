@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { Card, Icon, Text } from '../Base';
+import { Card, Icon, Text, InputText } from '../Base';
 
 const TodoHeader = () => {
   return (
@@ -17,26 +17,43 @@ const TodoHeader = () => {
   );
 };
 
-const TodoFooter = () => {
+const TodoFooter = ({ onAddNewItem }) => {
+  const [task, setTask] = useState('');
+
+  const onTextChange = (value) => {
+    setTask(value);
+  };
+
+  const onAddClick = () => {
+    onAddNewItem(task);
+    setTask('');
+  };
+
   return (
     <>
-      <Text bold color="text-slate-400">
+      <InputText
+        bold
+        color="text-slate-400"
+        placeholder="What we have to do?"
+        value={task}
+        onChange={onTextChange}
+      >
         what we have to do ?
-      </Text>
-      <Text bold color="text-emerald-600">
+      </InputText>
+      <Text bold color="text-emerald-600" onClick={onAddClick}>
         Add
       </Text>
     </>
   );
 };
 
-const TodoItem = ({ name, order, done }) => {
+const TodoItem = ({ name, order, done, onDelete }) => {
   const [isDone, setIsDone] = useState(done);
 
   const onCheck = () => setIsDone(!isDone);
 
   const onRemove = () => {
-    console.log('remove !');
+    onDelete();
   };
 
   const icon = isDone ? 'check' : 'uncheck';
@@ -66,11 +83,16 @@ const TodoItem = ({ name, order, done }) => {
   );
 };
 
-const TodoCard = ({ todos = [] }) => {
-  console.log({ todos });
+const TodoCard = ({ todos = [], add, order, remove }) => {
+  const onAddNewItem = (task) => {
+    add(task);
+  };
 
   return (
-    <Card header={() => <TodoHeader />} footer={() => <TodoFooter />}>
+    <Card
+      header={() => <TodoHeader />}
+      footer={() => <TodoFooter onAddNewItem={onAddNewItem} />}
+    >
       {todos.map((item) => {
         return (
           <TodoItem
@@ -78,6 +100,7 @@ const TodoCard = ({ todos = [] }) => {
             name={item.name}
             order={item.orde}
             done={item.done}
+            onDelete={() => remove(item.id)}
           />
         );
       })}
