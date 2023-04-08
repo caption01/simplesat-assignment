@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { Card, Icon, Text, InputText } from '../Base';
 
@@ -52,7 +52,7 @@ const TodoFooter = ({ onAddNewItem }) => {
   );
 };
 
-const TodoItem = ({ name, order, done, onChecked, onDelete }) => {
+const TodoItem = ({ name, done, onChecked, onDelete }) => {
   const onCheckIconClick = () => {
     onChecked();
   };
@@ -107,6 +107,18 @@ const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
     clear();
   };
 
+  const handleDrop = async (droppedItem) => {
+    const { draggableId, source, destination } = droppedItem;
+
+    const target = todos.find((item) => `${item.id}` === draggableId);
+
+    const id = target.id;
+    const from = source.index;
+    const to = destination.index;
+
+    order(id, { from, to });
+  };
+
   const total = todos.length;
 
   return (
@@ -114,18 +126,47 @@ const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
       header={() => <TodoHeader total={total} onClearItems={onClearItems} />}
       footer={() => <TodoFooter onAddNewItem={onAddNewItem} />}
     >
-      {todos.map((item) => {
-        return (
-          <TodoItem
-            key={item.id}
-            name={item.name}
-            order={item.orde}
-            done={item.done}
-            onChecked={() => onCheckItem(item.id, !item.done)}
-            onDelete={() => onDeleteItem(item.id)}
-          />
-        );
-      })}
+      <DragDropContext onDragEnd={handleDrop}>
+        <Droppable droppableId="list-container">
+          {(provided) => {
+            return (
+              <div
+                className="list-container"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {todos.map((item) => (
+                  <Draggable
+                    key={item.id}
+                    draggableId={`${item.id}`}
+                    index={item.order}
+                  >
+                    {(provided) => {
+                      return (
+                        <div
+                          className="item-container"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <TodoItem
+                            name={item.name}
+                            order={item.orde}
+                            done={item.done}
+                            onChecked={() => onCheckItem(item.id, !item.done)}
+                            onDelete={() => onDeleteItem(item.id)}
+                          />
+                        </div>
+                      );
+                    }}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            );
+          }}
+        </Droppable>
+      </DragDropContext>
     </Card>
   );
 };

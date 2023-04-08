@@ -15,7 +15,7 @@ const updateTodo = async (id, item) => {
 };
 
 const orderTodo = async (id, { from, to }) => {
-  return await axios.put(`todo/${id}/order/`, { from, to });
+  return await axios.post(`todo/${id}/order/`, { from, to });
 };
 
 const deleteTodo = async (id) => {

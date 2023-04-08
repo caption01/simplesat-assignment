@@ -75,8 +75,8 @@ class TodoItemReOrderApi(APIView, TodoClass):
     
     def post(self, request, pk):
         data = request.data
-        from_order = data.get('from_order')
-        to_order = data.get('to_order')
+        from_order = data.get('from')
+        to_order = data.get('to')
 
         super().re_order(_from=from_order, _to=to_order)
         order_items = super().get_order_items()
