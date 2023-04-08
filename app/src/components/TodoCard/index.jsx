@@ -14,9 +14,9 @@ const TodoHeader = ({ total = 0, onClearItems }) => {
         <Text bold color="text-emerald-600" size="text-[5rem]">
           TODAY
         </Text>
-        <Text italic>{total} tasks</Text>
+        <Text italic>{total} Tasks</Text>
       </div>
-      <Icon name="eraser" size={4} onClick={onEraserIconClick} pointer />
+      <Icon name="eraser" size={3} onClick={onEraserIconClick} pointer />
     </>
   );
 };
@@ -36,6 +36,7 @@ const TodoFooter = ({ onAddNewItem }) => {
   return (
     <>
       <InputText
+        className="p-[1rem]"
         bold
         color="text-slate-400"
         placeholder="What we have to do?"
@@ -75,7 +76,7 @@ const TodoItem = ({ name, done, onChecked, onDelete }) => {
         size={2.5}
         onClick={onCheckIconClick}
       />
-      <Text size="text-[3rem]" lineThrough={textLineThrough} color={textColor}>
+      <Text size="text-[2rem]" lineThrough={textLineThrough} color={textColor}>
         {name}
       </Text>
       {!isDone && (

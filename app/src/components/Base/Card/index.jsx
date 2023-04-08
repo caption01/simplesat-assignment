@@ -24,14 +24,13 @@ const HeaderContainer = tw.div`
   justify-between
   items-center
   w-full
-  pb-[3rem]
+  pb-[2rem]
 `;
 
 const BodyContainer = tw.div`
   flex-grow
   min-h-[30rem]
   max-h-[50rem]
-  py-[2rem]
   w-full
   overflow-scroll
 `;
@@ -46,7 +45,7 @@ const FooterContainer = tw.div`
   bottom-0
   left-0
   bg-gray-100
-  p-[3rem]
+  p-[2rem]
   rounded-b-[2rem]
 `;
 
