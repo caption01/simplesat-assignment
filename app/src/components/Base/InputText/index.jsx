@@ -21,6 +21,7 @@ const InputText = ({
   value = '',
   placeholder = '',
   onChange,
+  onEnterPress,
   children,
   ...props
 }) => {
@@ -28,6 +29,14 @@ const InputText = ({
     const value = e.target.value;
     onChange?.(value);
   }, []);
+
+  const onPress = (e) => {
+    const pressKey = e.key;
+
+    if (pressKey === 'Enter') {
+      onEnterPress?.(value);
+    }
+  };
 
   return (
     <StyledInput
@@ -40,6 +49,7 @@ const InputText = ({
       value={value}
       placeholder={placeholder}
       onChange={onInputChange}
+      onKeyPress={onPress}
       {...props}
     />
   );

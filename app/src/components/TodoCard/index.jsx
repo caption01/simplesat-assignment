@@ -24,7 +24,7 @@ const TodoFooter = ({ onAddNewItem }) => {
     setTask(value);
   };
 
-  const onAddClick = () => {
+  const AddNewItem = () => {
     onAddNewItem(task);
     setTask('');
   };
@@ -37,10 +37,11 @@ const TodoFooter = ({ onAddNewItem }) => {
         placeholder="What we have to do?"
         value={task}
         onChange={onTextChange}
+        onEnterPress={AddNewItem}
       >
         what we have to do ?
       </InputText>
-      <Text bold color="text-emerald-600" onClick={onAddClick}>
+      <Text bold color="text-emerald-600" onClick={AddNewItem}>
         Add
       </Text>
     </>
