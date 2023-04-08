@@ -37,7 +37,7 @@ const getTodoList = (axiosResponse) => {
   return responseData ? responseData.data.map(transform) : [];
 };
 
-export const useTodo = create((set) => ({
+export const useTodo = create((set, get) => ({
   todos: [],
   get: async () => {
     const response = await getTodo();
@@ -47,8 +47,16 @@ export const useTodo = create((set) => ({
     const response = await createTodo({ name: newTask });
     set({ todos: getTodoList(response) });
   },
-  edit: async (id, item) => {
-    const response = await updateTodo(id, item);
+  edit: async (id, status) => {
+    const todoLists = get().todos;
+
+    const target = todoLists.find((i) => i.id === id);
+    const updateData = {
+      name: target.name,
+      is_done: status,
+    };
+
+    const response = await updateTodo(id, updateData);
     set({ todos: getTodoList(response) });
   },
   order: async (id, { from, to }) => {

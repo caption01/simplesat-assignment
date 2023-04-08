@@ -48,28 +48,30 @@ const TodoFooter = ({ onAddNewItem }) => {
   );
 };
 
-const TodoItem = ({ name, order, done, onDelete }) => {
-  const [isDone, setIsDone] = useState(done);
+const TodoItem = ({ name, order, done, onChecked, onDelete }) => {
+  const onCheckIconClick = () => {
+    onChecked();
+  };
 
-  const onCheck = () => setIsDone(!isDone);
-
-  const onRemove = () => {
+  const onCrossIconClick = () => {
     onDelete();
   };
 
-  const icon = isDone ? 'check' : 'uncheck';
-  const color = isDone && 'text-slate-500';
-  const lineThrough = !!isDone;
+  const isDone = done;
+
+  const iconCheck = isDone ? 'check' : 'uncheck';
+  const textColor = isDone && 'text-slate-500';
+  const textLineThrough = !!isDone;
 
   return (
     <div className="mb-[1rem] flex justify-start items-center">
       <Icon
         className="mr-[2rem] cursor-pointer"
-        name={icon}
+        name={iconCheck}
         size={2.5}
-        onClick={onCheck}
+        onClick={onCheckIconClick}
       />
-      <Text size="text-[3rem]" lineThrough={lineThrough} color={color}>
+      <Text size="text-[3rem]" lineThrough={textLineThrough} color={textColor}>
         {name}
       </Text>
       {!isDone && (
@@ -77,16 +79,24 @@ const TodoItem = ({ name, order, done, onDelete }) => {
           className="ml-[2rem] cursor-pointer"
           name="cross"
           size={2}
-          onClick={onRemove}
+          onClick={onCrossIconClick}
         />
       )}
     </div>
   );
 };
 
-const TodoCard = ({ todos = [], add, order, remove }) => {
+const TodoCard = ({ todos = [], add, edit, order, remove }) => {
   const onAddNewItem = (task) => {
     add(task);
+  };
+
+  const onDeleteItem = (id) => {
+    remove(id);
+  };
+
+  const onCheckItem = (id, status) => {
+    edit(id, status);
   };
 
   return (
@@ -101,7 +111,8 @@ const TodoCard = ({ todos = [], add, order, remove }) => {
             name={item.name}
             order={item.orde}
             done={item.done}
-            onDelete={() => remove(item.id)}
+            onChecked={() => onCheckItem(item.id, !item.done)}
+            onDelete={() => onDeleteItem(item.id)}
           />
         );
       })}
