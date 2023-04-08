@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'tailwind-styled-components';
 
-import { TodoCard } from './components';
+import TodoContainer from './TodoContainer';
 
 const Layout = tw.div`
     w-full
@@ -17,7 +17,7 @@ const Layout = tw.div`
 function App() {
   return (
     <Layout>
-      <TodoCard />
+      <TodoContainer />
     </Layout>
   );
 }

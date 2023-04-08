@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import App from './App';
-
+import { TodoCard } from './components';
 import { useTodo } from './hook/useTodo';
 
-const AppContainer = () => {
+const TodoContainer = () => {
   const todos = useTodo((state) => state.todos);
   const get = useTodo((state) => state.get);
 
@@ -12,7 +11,7 @@ const AppContainer = () => {
     get();
   }, []);
 
-  return <App todos={todos} />;
+  return <TodoCard todos={todos} />;
 };
 
-export default AppContainer;
+export default TodoContainer;

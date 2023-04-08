@@ -22,26 +22,40 @@ const deleteTodo = async (id) => {
   return await axios.delete(`todo/${id}/`);
 };
 
+const transform = (item = {}) => {
+  return {
+    id: item.id,
+    name: item.name,
+    order: item.order,
+    done: item.is_done,
+  };
+};
+
 export const useTodo = create((set) => ({
   todos: [],
   get: async () => {
     const todos = await getTodo();
-    set({ todos: todos.data });
+    const todoList = todos.data.map(transform);
+    set({ todos: todoList });
   },
   add: async (item) => {
     const todos = await createTodo(item);
-    set({ todos: todos.data });
+    const todoList = todos.data.map(transform);
+    set({ todos: todoList });
   },
   edit: async (id, item) => {
     const todos = await updateTodo(id, item);
-    set({ todos: todos.data });
+    const todoList = todos.data.map(transform);
+    set({ todos: todoList });
   },
-  reOrder: async (id, { from, to }) => {
+  order: async (id, { from, to }) => {
     const todos = await orderTodo(id, { from, to });
-    set({ todos: todos.data });
+    const todoList = todos.data.map(transform);
+    set({ todos: todoList });
   },
   remove: async (id, item) => {
     const todos = await deleteTodo(id);
-    set({ todos: todos.data });
+    const todoList = todos.data.map(transform);
+    set({ todos: todoList });
   },
 }));

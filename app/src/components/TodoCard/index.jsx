@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useState } from 'react';
 
 import { Card, Icon, Text } from '../Base';
@@ -30,7 +30,7 @@ const TodoFooter = () => {
   );
 };
 
-const TodoItem = ({ done }) => {
+const TodoItem = ({ name, order, done }) => {
   const [isDone, setIsDone] = useState(done);
 
   const onCheck = () => setIsDone(!isDone);
@@ -52,7 +52,7 @@ const TodoItem = ({ done }) => {
         onClick={onCheck}
       />
       <Text size="text-[3rem]" lineThrough={lineThrough} color={color}>
-        i am body
+        {name}
       </Text>
       {!isDone && (
         <Icon
@@ -66,13 +66,21 @@ const TodoItem = ({ done }) => {
   );
 };
 
-const TodoCard = () => {
+const TodoCard = ({ todos = [] }) => {
+  console.log({ todos });
+
   return (
     <Card header={() => <TodoHeader />} footer={() => <TodoFooter />}>
-      <TodoItem done />
-      <TodoItem done />
-      <TodoItem />
-      <TodoItem />
+      {todos.map((item) => {
+        return (
+          <TodoItem
+            key={item.id}
+            name={item.name}
+            order={item.orde}
+            done={item.done}
+          />
+        );
+      })}
     </Card>
   );
 };
