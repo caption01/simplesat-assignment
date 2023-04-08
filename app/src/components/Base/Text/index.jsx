@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import tw from 'tailwind-styled-components';
 
 const StyledDiv = tw.div`
@@ -7,6 +7,7 @@ const StyledDiv = tw.div`
   ${(p) => p.$bold && 'font-bold'}
   ${(p) => p.$italic && 'italic'}
   ${(p) => p.$lineThrough && 'line-through'}
+  ${(p) => p.$pointer && 'cursor-pointer'}
 `;
 
 const Text = ({
@@ -15,6 +16,7 @@ const Text = ({
   bold = false,
   italic = false,
   lineThrough = false,
+  pointer = false,
   ...props
 }) => {
   return (
@@ -24,6 +26,7 @@ const Text = ({
       $bold={bold}
       $italic={italic}
       $lineThrough={lineThrough}
+      $pointer={pointer}
       {...props}
     />
   );

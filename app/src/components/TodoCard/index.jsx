@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { Card, Icon, Text, InputText } from '../Base';
 
-const TodoHeader = ({ onClearItems }) => {
+const TodoHeader = ({ total = 0, onClearItems }) => {
   const onEraserIconClick = () => {
     onClearItems();
   };
@@ -14,7 +14,7 @@ const TodoHeader = ({ onClearItems }) => {
         <Text bold color="text-emerald-600" size="text-[5rem]">
           TODAY
         </Text>
-        <Text italic>5 tasks</Text>
+        <Text italic>{total} tasks</Text>
       </div>
       <Icon name="eraser" size={4} onClick={onEraserIconClick} pointer />
     </>
@@ -45,7 +45,7 @@ const TodoFooter = ({ onAddNewItem }) => {
       >
         what we have to do ?
       </InputText>
-      <Text bold color="text-emerald-600" onClick={AddNewItem}>
+      <Text bold pointer color="text-emerald-600" onClick={AddNewItem}>
         Add
       </Text>
     </>
@@ -107,9 +107,11 @@ const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
     clear();
   };
 
+  const total = todos.length;
+
   return (
     <Card
-      header={() => <TodoHeader onClearItems={onClearItems} />}
+      header={() => <TodoHeader total={total} onClearItems={onClearItems} />}
       footer={() => <TodoFooter onAddNewItem={onAddNewItem} />}
     >
       {todos.map((item) => {
