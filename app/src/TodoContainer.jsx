@@ -5,7 +5,7 @@ import { useTodo } from './hook/useTodo';
 
 const TodoContainer = () => {
   const todoState = useTodo((state) => state);
-  const { todos, get, edit, add, order, remove, clear } = todoState;
+  const { todos, setTodos, get, edit, add, order, remove, clear } = todoState;
 
   useEffect(() => {
     get();
@@ -14,6 +14,7 @@ const TodoContainer = () => {
   return (
     <TodoCard
       todos={todos}
+      setTodos={setTodos}
       add={add}
       edit={edit}
       order={order}

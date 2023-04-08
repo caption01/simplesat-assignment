@@ -43,6 +43,9 @@ const getTodoList = (axiosResponse) => {
 
 export const useTodo = create((set, get) => ({
   todos: [],
+  setTodos: (newTodos) => {
+    set({ todos: newTodos });
+  },
   get: async () => {
     const response = await getTodo();
     set({ todos: getTodoList(response) });

@@ -90,7 +90,15 @@ const TodoItem = ({ name, done, onChecked, onDelete }) => {
   );
 };
 
-const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
+const TodoCard = ({
+  todos = [],
+  setTodos,
+  add,
+  edit,
+  order,
+  remove,
+  clear,
+}) => {
   const onAddNewItem = (task) => {
     add(task);
   };
@@ -107,16 +115,25 @@ const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
     clear();
   };
 
-  const handleDrop = async (droppedItem) => {
+  const onDropItem = (droppedItem) => {
     const { draggableId, source, destination } = droppedItem;
 
     const target = todos.find((item) => `${item.id}` === draggableId);
 
     const id = target.id;
-    const from = source.index;
-    const to = destination.index;
+    const fromOrder = source.index;
+    const toOrder = destination.index;
 
-    order(id, { from, to });
+    const todoLists = todos.filter((item) => item.id !== target.id);
+    todoLists.splice(toOrder - 1, 0, target);
+
+    const newTodos = todoLists.map((i, index) => ({ ...i, order: index + 1 }));
+
+    // sync set locally new todo state to handle flicker UI
+    setTodos(newTodos);
+
+    // then confirm order from api
+    order(id, { from: fromOrder, to: toOrder });
   };
 
   const total = todos.length;
@@ -126,7 +143,7 @@ const TodoCard = ({ todos = [], add, edit, order, remove, clear }) => {
       header={() => <TodoHeader total={total} onClearItems={onClearItems} />}
       footer={() => <TodoFooter onAddNewItem={onAddNewItem} />}
     >
-      <DragDropContext onDragEnd={handleDrop}>
+      <DragDropContext onDragEnd={onDropItem}>
         <Droppable droppableId="list-container">
           {(provided) => {
             return (
