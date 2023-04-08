@@ -18,6 +18,12 @@ class TodoItemList(ListCreateAPIView, TodoClass):
         else:
             return self.serializer_class
         
+    def get(self, request, *args, **kwargs):
+        order_items = super().get_order_items()
+        response = { 'success': True, 'data': order_items }
+
+        return Response(response, status=status.HTTP_201_CREATED)
+        
     def post(self, request, *args, **kwargs):
         name = request.data.get('name')
         total_items = self.queryset.count()
