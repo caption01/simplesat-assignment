@@ -83,3 +83,10 @@ class TodoItemReOrderApi(APIView, TodoClass):
 
         response = { 'success': True, 'data': order_items }
         return Response(response, status=status.HTTP_202_ACCEPTED)
+    
+
+class TodoItemClearApi(APIView, TodoClass):    
+    def delete(self, request):
+        TodoItem.objects.all().delete()
+        response = { 'success': True, 'data': [] }
+        return Response(response, status=status.HTTP_202_ACCEPTED)
