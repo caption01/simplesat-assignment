@@ -5,7 +5,7 @@ import { useTodo } from './hook/useTodo';
 
 const TodoContainer = () => {
   const todoState = useTodo((state) => state);
-  const { todos, get, edit, add, order, remove } = todoState;
+  const { todos, get, edit, add, order, remove, clear } = todoState;
 
   useEffect(() => {
     get();
@@ -18,6 +18,7 @@ const TodoContainer = () => {
       edit={edit}
       order={order}
       remove={remove}
+      clear={clear}
     />
   );
 };

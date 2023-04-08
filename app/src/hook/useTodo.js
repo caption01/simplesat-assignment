@@ -22,6 +22,10 @@ const deleteTodo = async (id) => {
   return await axios.delete(`todo/${id}/`);
 };
 
+const clearTodo = async (id) => {
+  return await axios.delete(`todo/clear/`);
+};
+
 const transform = (item = {}) => {
   return {
     id: item.id,
@@ -65,6 +69,10 @@ export const useTodo = create((set, get) => ({
   },
   remove: async (id) => {
     const response = await deleteTodo(id);
+    set({ todos: getTodoList(response) });
+  },
+  clear: async () => {
+    const response = await clearTodo();
     set({ todos: getTodoList(response) });
   },
 }));
