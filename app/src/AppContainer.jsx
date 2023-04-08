@@ -1,12 +1,18 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import App from './App';
 
-const AppContainer = () => {
-  const [todo, setTodo] = useState([]);
+import { useTodo } from './hook/useTodo';
 
-  return <App />;
+const AppContainer = () => {
+  const todos = useTodo((state) => state.todos);
+  const get = useTodo((state) => state.get);
+
+  useEffect(() => {
+    get();
+  }, []);
+
+  return <App todos={todos} />;
 };
 
 export default AppContainer;
