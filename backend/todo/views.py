@@ -8,7 +8,7 @@ from .serializers import TodoSerializer, TodoItemCreateSerializer, TodoItemUpdat
 from .helper import TodoClass
 
 
-class TodoItemList(ListCreateAPIView):
+class TodoItemList(ListCreateAPIView, TodoClass):
     queryset = TodoItem.objects.all().order_by('order')
     serializer_class = TodoSerializer
 
@@ -31,7 +31,9 @@ class TodoItemList(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        response = { 'success': True, 'data': serializer.validated_data }
+        order_items = super().get_order_items()
+
+        response = { 'success': True, 'data': order_items }
         return Response(response, status=status.HTTP_201_CREATED)
 
 
@@ -44,8 +46,10 @@ class TodoItemUpdateApi(APIView, TodoClass):
         serializer = self.serializer_class(instance=item, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+         
+        order_items = super().get_order_items()
 
-        response = { 'success': True, 'data': serializer.validated_data }
+        response = { 'success': True, 'data': order_items }
         return Response(response, status=status.HTTP_200_OK)
     
     def delete(self, request, pk):
@@ -53,9 +57,10 @@ class TodoItemUpdateApi(APIView, TodoClass):
         deleted_order = item.order
         item.delete()
 
-        items = super().re_order(_from=deleted_order, _to=None)
-        response = { 'success': True, 'data': items }
+        super().re_order(_from=deleted_order, _to=None)
+        order_items = super().get_order_items()
 
+        response = { 'success': True, 'data': order_items }
         return Response(response, status=status.HTTP_202_ACCEPTED)
 
 
@@ -67,7 +72,8 @@ class TodoItemReOrderApi(APIView, TodoClass):
         from_order = data.get('from_order')
         to_order = data.get('to_order')
 
-        items = super().re_order(_from=from_order, _to=to_order)
-        response = { 'success': True, 'data': items }
+        super().re_order(_from=from_order, _to=to_order)
+        order_items = super().get_order_items()
 
+        response = { 'success': True, 'data': order_items }
         return Response(response, status=status.HTTP_202_ACCEPTED)

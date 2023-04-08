@@ -1,6 +1,9 @@
 from .models import TodoItem
 
 class TodoClass:
+    def get_order_items(self):
+        return TodoItem.objects.all().order_by('order').values('id', 'name', 'order', 'is_done')
+
     def re_order(self, _from, _to):
         from_order = int(_from)
         to_order = int(_to) if _to else None
@@ -36,8 +39,6 @@ class TodoClass:
             edit_item.order = to_order
             edit_item.save()
 
-        items = TodoItem.objects.all().order_by('order').values('id', 'name', 'order', 'is_done')
-
-        return items 
+        return 
 
 

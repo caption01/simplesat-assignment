@@ -18,7 +18,7 @@ class TodoItemUpdateSerializer(ModelSerializer):
     is_done = BooleanField(required=True)
     class Meta:
         model = TodoItem
-        fields = '__all__'
+        fields = ('name', 'is_done',)
 
 
 class TodoItemReOrderUpdateSerializer(Serializer):
