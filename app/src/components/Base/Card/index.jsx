@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import tw from 'tailwind-styled-components';
 
 const Container = tw.div`
@@ -11,7 +11,12 @@ const Container = tw.div`
   pt-[2rem]
   px-[3rem]
   rounded-[2rem]
-  min-w-[40rem]
+  min-w-[45rem]
+`;
+
+const SafeFooterSpace = tw.div`
+  h-[10rem]
+  w-full
 `;
 
 const HeaderContainer = tw.div`
@@ -24,9 +29,11 @@ const HeaderContainer = tw.div`
 
 const BodyContainer = tw.div`
   flex-grow
-  min-h-[40rem]
+  min-h-[30rem]
+  max-h-[50rem]
   py-[2rem]
   w-full
+  overflow-scroll
 `;
 
 const FooterContainer = tw.div`
@@ -56,6 +63,7 @@ const Card = ({ header, footer, children }) => {
     <Container>
       {header && <Header header={header} />}
       <BodyContainer>{children}</BodyContainer>
+      {footer && <SafeFooterSpace />}
       {footer && <Footer footer={footer} />}
     </Container>
   );
