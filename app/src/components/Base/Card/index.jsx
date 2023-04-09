@@ -33,6 +33,7 @@ const BodyContainer = tw.div`
   max-h-[50rem]
   w-full
   overflow-scroll
+  pb-[2rem]
 `;
 
 const FooterContainer = tw.div`
@@ -54,7 +55,12 @@ const Header = ({ header }) => {
 };
 
 const Footer = ({ footer }) => {
-  return <FooterContainer>{footer()}</FooterContainer>;
+  return (
+    <>
+      <SafeFooterSpace />
+      <FooterContainer>{footer()}</FooterContainer>
+    </>
+  );
 };
 
 const Card = ({ header, footer, children }) => {
@@ -62,7 +68,6 @@ const Card = ({ header, footer, children }) => {
     <Container>
       {header && <Header header={header} />}
       <BodyContainer>{children}</BodyContainer>
-      {footer && <SafeFooterSpace />}
       {footer && <Footer footer={footer} />}
     </Container>
   );
