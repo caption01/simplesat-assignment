@@ -93,50 +93,12 @@ const TodoItem = ({ name, done, onChecked, onDelete }) => {
 
 const TodoCard = ({
   todos = [],
-  setTodos,
-  add,
-  edit,
-  order,
-  remove,
-  clear,
+  onAddNewItem,
+  onDeleteItem,
+  onCheckItem,
+  onDropItem,
+  onClearItems,
 }) => {
-  const onAddNewItem = (task) => {
-    add(task);
-  };
-
-  const onDeleteItem = (id) => {
-    remove(id);
-  };
-
-  const onCheckItem = (id, status) => {
-    edit(id, status);
-  };
-
-  const onClearItems = () => {
-    clear();
-  };
-
-  const onDropItem = (droppedItem) => {
-    const { draggableId, source, destination } = droppedItem;
-
-    const target = todos.find((item) => `${item.id}` === draggableId);
-
-    const id = target.id;
-    const fromOrder = source.index;
-    const toOrder = destination.index;
-
-    const todoLists = todos.filter((item) => item.id !== target.id);
-    todoLists.splice(toOrder - 1, 0, target);
-
-    const newTodos = todoLists.map((i, index) => ({ ...i, order: index + 1 }));
-
-    // sync set locally new todo state to handle flicker UI
-    setTodos(newTodos);
-
-    // then confirm order from api
-    order(id, { from: fromOrder, to: toOrder });
-  };
-
   const total = todos.length;
 
   return (
